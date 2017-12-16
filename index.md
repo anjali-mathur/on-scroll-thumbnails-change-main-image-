@@ -1,37 +1,39 @@
-## Welcome to GitHub Pages
+#product images
 
-You can use the [editor on GitHub](https://github.com/anjali-mathur/on-scroll-thumbnails-change-main-image-/edit/master/index.md) to maintain and preview the content for your website in Markdown files.
-
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
-
-### Markdown
-
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
-
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/anjali-mathur/on-scroll-thumbnails-change-main-image-/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+{% assign featured_image = product.selected_or_first_available_variant.featured_image | default: product.featured_image %}
+<div class="product_gallery product-{{ product.id }}-gallery {% if product-images == blank %}product_slider{% endif %} {% if settings.product_thumbs == false %}animated fadeInUp{% endif %}">
+<div class="slider slider-for">
+   {% for image in product.images %}
+  <div>
+<img class="img1" rel="gallery1" src="{{ image | product_img_url: '1024x1024' }}" data-zoom-image="{{ image | product_img_url: '1024x1024' }}" /> 
+  </div>
+  {%endfor%}
+</div>
+<div class="slider slider-nav">
+   {% for image in product.images %}
+  <div>
+   <img  src="{{ image | product_img_url: '100x1000' }}">
+  </div>
+  {%endfor%}
+</div>
+</div>
+ 
+ <script>
+$(document).ready(function(){  
+  $('.slider-for').slick({
+  slidesToShow: 1,
+  slidesToScroll: 1,
+  arrows: false,
+  fade: true,
+  asNavFor: '.slider-nav'
+});
+$('.slider-nav').slick({
+  slidesToShow: 3,
+  slidesToScroll: 1,
+  asNavFor: '.slider-for',
+  dots: true,
+  centerMode: true,
+  focusOnSelect: true
+});
+  });
+</script>
